@@ -1,0 +1,29 @@
+import com.example.PaymentPage
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
+import org.openqa.selenium.WebDriver
+
+
+class Lab3Tests {
+
+
+    @Nested
+    inner class  PaymentPageTests {
+        @ParameterizedTest
+        @ValueSource(strings = ["chrome", "firefox"])
+        fun `testFillFullPaymenxtForm`(browser: String) {
+            val driver = BrowserFactory.getDriver(browser)
+            driver.get("https://timeweb.com")
+            val paymentPage = PaymentPage(driver)
+            val hostName = "example.com"
+            val amount = "100.00"
+
+            paymentPage.openPaymentPage()
+            paymentPage.fillFullPaymentForm(hostName, amount)
+            assertTrue(paymentPage.isInvalidInputDataNotificationDisplayed(), "Invalid input data notification should be displayed")
+        }
+    }
+}
