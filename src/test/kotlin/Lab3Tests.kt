@@ -70,4 +70,40 @@ class Lab3Tests {
             }
         }
     }
+
+    @Nested
+    inner class KnowledgeBasePageTests {
+        @ParameterizedTest
+        @ValueSource(strings = ["chrome", "firefox"])
+        fun `testGetAnswerFromFaqSection`(browser: String) {
+            val driver = BrowserFactory.getDriver(browser)
+            try{
+                driver.get("https://timeweb.com")
+                val knowledgeBasePage = KnowledgeBasePage(driver)
+
+                knowledgeBasePage.getAnswerFromFaqSection()
+                assertTrue(knowledgeBasePage.isCorrectPageDisplayed(), "Correct page should be displayed")
+            }
+            finally {
+                driver.quit()
+            }
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = ["chrome", "firefox"])
+        fun `testGetAnswerFromSearch`(browser: String) {
+            val driver = BrowserFactory.getDriver(browser)
+            try{
+                driver.get("https://timeweb.com")
+                val knowledgeBasePage = KnowledgeBasePage(driver)
+                val searchQuery = "Что такое домен?"
+
+                knowledgeBasePage.getAnswerFromSearch(searchQuery)
+                assertTrue(knowledgeBasePage.isCorrectPageDisplayed(), "Correct page should be displayed")
+            }
+            finally {
+                driver.quit()
+            }
+        }
+    }
 }
