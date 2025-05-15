@@ -11,12 +11,12 @@ class Lab3Tests {
 
 
     @Nested
-    inner class  PaymentPageTests {
+    inner class PaymentPageTests {
         @ParameterizedTest
         @ValueSource(strings = ["chrome", "firefox"])
         fun `testFillFullPaymenxtForm`(browser: String) {
             val driver = BrowserFactory.getDriver(browser)
-            try{
+            try {
                 driver.get("https://timeweb.com")
                 val paymentPage = PaymentPage(driver)
                 val hostName = "example.com"
@@ -28,8 +28,7 @@ class Lab3Tests {
                     paymentPage.isInvalidInputDataNotificationDisplayed(),
                     "Invalid input data notification should be displayed"
                 )
-            }
-            finally {
+            } finally {
                 driver.quit()
             }
         }
@@ -38,7 +37,7 @@ class Lab3Tests {
         @ValueSource(strings = ["chrome", "firefox"])
         fun `testFillOnlyHostName`(browser: String) {
             val driver = BrowserFactory.getDriver(browser)
-            try{
+            try {
                 driver.get("https://timeweb.com")
                 val paymentPage = PaymentPage(driver)
                 val hostName = "example.com"
@@ -46,8 +45,7 @@ class Lab3Tests {
                 paymentPage.openPaymentPage()
                 paymentPage.fillOnlyHostName(hostName)
                 assertTrue(paymentPage.isEmptyAmountErrorDisplayed(), "Empty amount error should be displayed")
-            }
-            finally {
+            } finally {
                 driver.quit()
             }
         }
@@ -56,7 +54,7 @@ class Lab3Tests {
         @ValueSource(strings = ["chrome", "firefox"])
         fun `testFillOnlyAmount`(browser: String) {
             val driver = BrowserFactory.getDriver(browser)
-            try{
+            try {
                 driver.get("https://timeweb.com")
                 val paymentPage = PaymentPage(driver)
                 val amount = "100.00"
@@ -64,8 +62,7 @@ class Lab3Tests {
                 paymentPage.openPaymentPage()
                 paymentPage.fillOnlyAmount(amount)
                 assertTrue(paymentPage.isEmptyHostNameErrorDisplayed(), "Empty hostname error should be displayed")
-            }
-            finally {
+            } finally {
                 driver.quit()
             }
         }
@@ -77,14 +74,13 @@ class Lab3Tests {
         @ValueSource(strings = ["chrome", "firefox"])
         fun `testGetAnswerFromFaqSection`(browser: String) {
             val driver = BrowserFactory.getDriver(browser)
-            try{
+            try {
                 driver.get("https://timeweb.com")
                 val knowledgeBasePage = KnowledgeBasePage(driver)
 
                 knowledgeBasePage.getAnswerFromFaqSection()
                 assertTrue(knowledgeBasePage.isCorrectPageDisplayed(), "Correct page should be displayed")
-            }
-            finally {
+            } finally {
                 driver.quit()
             }
         }
@@ -93,17 +89,99 @@ class Lab3Tests {
         @ValueSource(strings = ["chrome", "firefox"])
         fun `testGetAnswerFromSearch`(browser: String) {
             val driver = BrowserFactory.getDriver(browser)
-            try{
+            try {
                 driver.get("https://timeweb.com")
                 val knowledgeBasePage = KnowledgeBasePage(driver)
                 val searchQuery = "Что такое домен?"
 
                 knowledgeBasePage.getAnswerFromSearch(searchQuery)
                 assertTrue(knowledgeBasePage.isCorrectPageDisplayed(), "Correct page should be displayed")
-            }
-            finally {
+            } finally {
                 driver.quit()
             }
         }
     }
+
+    @Nested
+    inner class DocumentsPageTests {
+        @ParameterizedTest
+        @ValueSource(strings = ["chrome", "firefox"])
+        fun `testOpenDocumentsPage`(browser: String) {
+            val driver = BrowserFactory.getDriver(browser)
+            try {
+                driver.get("https://timeweb.com")
+                val documentsPage = DocumentsPage(driver)
+
+                documentsPage.openDocumentsPage()
+                assertTrue(documentsPage.isErrorMessageDisplayed(), "Error message should be displayed")
+            } finally {
+                driver.quit()
+            }
+        }
+    }
+
+    @Nested
+    inner class LoginPageTests {
+        @ParameterizedTest
+        @ValueSource(strings = ["chrome", "firefox"])
+        fun `testSubmitEmptyFields`(browser: String) {
+            val driver = BrowserFactory.getDriver(browser)
+            try {
+                driver.get("https://timeweb.com")
+                val loginPage = LoginPage(driver)
+
+                loginPage.submitEmptyFields()
+                assertTrue(loginPage.isErrorNotificationDisplayed(), "Error notification should be displayed")
+            } finally {
+                driver.quit()
+            }
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = ["chrome", "firefox"])
+        fun `testSubmitInvalidCredentials`(browser: String) {
+            val driver = BrowserFactory.getDriver(browser)
+            try {
+                driver.get("https://timeweb.com")
+                val loginPage = LoginPage(driver)
+
+                loginPage.submitInvalidCredentials()
+                assertTrue(loginPage.isErrorNotificationDisplayed(), "Error notification should be displayed")
+            } finally {
+                driver.quit()
+            }
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = ["chrome", "firefox"])
+        fun `testSubmitValidCredentials`(browser: String) {
+            val driver = BrowserFactory.getDriver(browser)
+            try {
+                driver.get("https://timeweb.com")
+                val loginPage = LoginPage(driver)
+
+                loginPage.submitValidCredentials()
+                assertTrue(loginPage.isFinalPageDisplayed(), "Final page should be displayed")
+            } finally {
+                driver.quit()
+            }
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = ["chrome", "firefox"])
+        fun `testSubmitEmptyForm`(browser: String) {
+            val driver = BrowserFactory.getDriver(browser)
+            try {
+                driver.get("https://timeweb.com")
+                val loginPage = LoginPage(driver)
+
+                loginPage.submitEmptyFields()
+                assertTrue(loginPage.isErrorNotificationDisplayed(), "Error notification should be displayed")
+            } finally {
+                driver.quit()
+            }
+        }
+    }
+
+
 }
