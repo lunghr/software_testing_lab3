@@ -19,7 +19,7 @@ class LoginPage(
         By.xpath("//p[contains(text(), 'Войти в панель управления')]")
     private val errorNotification = By.xpath("//p[@class='c-hTHUpS']")
 
-    val accountName = By.xpath("//p[@data-analytics-id='login_vh']")
+    private val accountName = By.xpath("//p[@data-analytics-id='login_vh']")
 
 
 

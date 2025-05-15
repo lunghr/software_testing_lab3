@@ -2,6 +2,7 @@ package com.example
 
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
+import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 import java.time.Duration
 
@@ -26,7 +27,9 @@ class PaymentPage(
     }
 
     private fun clickSbpPaymentMethod() {
-        wait.until { driver.findElement(sbpPaymentMethod) }.click()
+        // Wait for the payment method to be clickable
+
+        wait.until(ExpectedConditions.elementToBeClickable(sbpPaymentMethod)).click()
     }
 
     private fun enterHostName(hostName: String) {

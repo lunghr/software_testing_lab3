@@ -1,16 +1,20 @@
 import com.example.PaymentPage
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.parallel.Execution
+import org.junit.jupiter.api.parallel.ExecutionMode
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import org.openqa.selenium.WebDriver
 
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Execution(ExecutionMode.CONCURRENT)
 class Lab3Tests {
 
 
     @Nested
+    @Execution(ExecutionMode.SAME_THREAD)
     inner class PaymentPageTests {
         @ParameterizedTest
         @ValueSource(strings = ["chrome", "firefox"])
@@ -69,6 +73,7 @@ class Lab3Tests {
     }
 
     @Nested
+    @Execution(ExecutionMode.SAME_THREAD)
     inner class KnowledgeBasePageTests {
         @ParameterizedTest
         @ValueSource(strings = ["chrome", "firefox"])
@@ -103,6 +108,7 @@ class Lab3Tests {
     }
 
     @Nested
+    @Execution(ExecutionMode.SAME_THREAD)
     inner class DocumentsPageTests {
         @ParameterizedTest
         @ValueSource(strings = ["chrome", "firefox"])
@@ -121,6 +127,7 @@ class Lab3Tests {
     }
 
     @Nested
+    @Execution(ExecutionMode.SAME_THREAD)
     inner class LoginPageTests {
         @ParameterizedTest
         @ValueSource(strings = ["chrome", "firefox"])
