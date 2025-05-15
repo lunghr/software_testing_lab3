@@ -16,40 +16,58 @@ class Lab3Tests {
         @ValueSource(strings = ["chrome", "firefox"])
         fun `testFillFullPaymenxtForm`(browser: String) {
             val driver = BrowserFactory.getDriver(browser)
-            driver.get("https://timeweb.com")
-            val paymentPage = PaymentPage(driver)
-            val hostName = "example.com"
-            val amount = "100.00"
+            try{
+                driver.get("https://timeweb.com")
+                val paymentPage = PaymentPage(driver)
+                val hostName = "example.com"
+                val amount = "100.00"
 
-            paymentPage.openPaymentPage()
-            paymentPage.fillFullPaymentForm(hostName, amount)
-            assertTrue(paymentPage.isInvalidInputDataNotificationDisplayed(), "Invalid input data notification should be displayed")
+                paymentPage.openPaymentPage()
+                paymentPage.fillFullPaymentForm(hostName, amount)
+                assertTrue(
+                    paymentPage.isInvalidInputDataNotificationDisplayed(),
+                    "Invalid input data notification should be displayed"
+                )
+            }
+            finally {
+                driver.quit()
+            }
         }
 
         @ParameterizedTest
         @ValueSource(strings = ["chrome", "firefox"])
         fun `testFillOnlyHostName`(browser: String) {
             val driver = BrowserFactory.getDriver(browser)
-            driver.get("https://timeweb.com")
-            val paymentPage = PaymentPage(driver)
-            val hostName = "example.com"
+            try{
+                driver.get("https://timeweb.com")
+                val paymentPage = PaymentPage(driver)
+                val hostName = "example.com"
 
-            paymentPage.openPaymentPage()
-            paymentPage.fillOnlyHostName(hostName)
-            assertTrue(paymentPage.isEmptyAmountErrorDisplayed(), "Empty amount error should be displayed")
+                paymentPage.openPaymentPage()
+                paymentPage.fillOnlyHostName(hostName)
+                assertTrue(paymentPage.isEmptyAmountErrorDisplayed(), "Empty amount error should be displayed")
+            }
+            finally {
+                driver.quit()
+            }
         }
 
         @ParameterizedTest
         @ValueSource(strings = ["chrome", "firefox"])
         fun `testFillOnlyAmount`(browser: String) {
             val driver = BrowserFactory.getDriver(browser)
-            driver.get("https://timeweb.com")
-            val paymentPage = PaymentPage(driver)
-            val amount = "100.00"
+            try{
+                driver.get("https://timeweb.com")
+                val paymentPage = PaymentPage(driver)
+                val amount = "100.00"
 
-            paymentPage.openPaymentPage()
-            paymentPage.fillOnlyAmount(amount)
-            assertTrue(paymentPage.isEmptyHostNameErrorDisplayed(), "Empty hostname error should be displayed")
+                paymentPage.openPaymentPage()
+                paymentPage.fillOnlyAmount(amount)
+                assertTrue(paymentPage.isEmptyHostNameErrorDisplayed(), "Empty hostname error should be displayed")
+            }
+            finally {
+                driver.quit()
+            }
         }
     }
 }

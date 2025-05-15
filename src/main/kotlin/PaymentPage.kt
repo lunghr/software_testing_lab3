@@ -11,7 +11,7 @@ class PaymentPage(
 ) {
 
     private val wait = WebDriverWait(driver, Duration.ofSeconds(10))
-    private val paymentIcon = By.xpath("//a[contains(@href, '#pay')]")
+    private val paymentIcon = By.xpath("//a[@data-selenium='header-btn-payment']")
     private val sbpPaymentMethod = By.xpath("//div[@data-selenium='modal_pay_sbp']")
     private val hostNameInput = By.xpath("//input[@data-selenium='modal-payment-fld-domain']")
     private val amountInput = By.xpath("//input[@data-selenium='modal-payment-fld-amount']")
