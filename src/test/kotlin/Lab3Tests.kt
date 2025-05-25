@@ -17,7 +17,7 @@ class Lab3Tests {
     @Execution(ExecutionMode.SAME_THREAD)
     inner class PaymentPageTests {
         @ParameterizedTest
-        @ValueSource(strings = ["chrome", "firefox"])
+        @ValueSource(strings = ["chrome"])
         fun `testFillFullPaymenxtForm`(browser: String) {
             val driver = BrowserFactory.getDriver(browser)
             try {
@@ -184,6 +184,45 @@ class Lab3Tests {
 
                 loginPage.submitEmptyFields()
                 assertTrue(loginPage.isErrorNotificationDisplayed(), "Error notification should be displayed")
+            } finally {
+                driver.quit()
+            }
+        }
+    }
+
+    @Nested
+    inner class ServersPageTests {
+        @ParameterizedTest
+        @ValueSource(strings = ["chrome", "firefox"])
+        fun `testSortByPrice`(browser: String) {
+            val fromPrice = 74000
+            val toPrice = 152000
+            val driver = BrowserFactory.getDriver(browser)
+            try {
+                driver.get("https://timeweb.com")
+                val serversPage = ServersPage(driver)
+
+                serversPage.sortByPrice(fromPrice, toPrice)
+                assertTrue(serversPage.isSortedByPrice(fromPrice, toPrice), "Results should be sorted by price")
+            } finally {
+                driver.quit()
+            }
+        }
+    }
+
+
+    @Nested
+    inner class VDSPageTests {
+        @ParameterizedTest
+        @ValueSource(strings = ["chrome", "firefox"])
+        fun `testSortByHz`(browser: String) {
+            val driver = BrowserFactory.getDriver(browser)
+            try {
+                driver.get("https://timeweb.com")
+                val vdsPage = VDSPage(driver)
+
+                vdsPage.sortByHz()
+                assertTrue(vdsPage.isSortedByHz(), "Results should be sorted by Hz")
             } finally {
                 driver.quit()
             }

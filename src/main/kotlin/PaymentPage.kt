@@ -35,6 +35,7 @@ class PaymentPage(
     private fun enterHostName(hostName: String) {
         driver.findElement(hostNameInput).clear()
         wait.until { driver.findElement(hostNameInput) }.sendKeys(hostName)
+        wait.
     }
 
     private fun enterAmount(amount: String) {
